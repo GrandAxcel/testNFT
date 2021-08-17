@@ -27,7 +27,7 @@ const projectApi = async(req, res) => {
 
   // IF YOU ARE USING INSTA REVEAL MODEL, UNCOMMENT THIS AND COMMENT THE TWO LINES BELOW
   //if(parseInt(query) < totalSupply) {
-  const totalNFT = 10;
+  const totalNFT = 30;
   if(parseInt(query) < totalNFT) {
 
 
@@ -54,7 +54,7 @@ const projectApi = async(req, res) => {
         "description": " Test Description",
         "tokenId" : parseInt(query),
         "image": `https://gateway.pinata.cloud/ipfs/${trait["imageIPFS"]}`,
-        "external_url":"https://www.testNFT.co",
+        "external_url":"https://test-nft-iota.vercel.app/",
         "attributes": [   
           {
             "trait_type": "Signature Series",
@@ -70,7 +70,7 @@ const projectApi = async(req, res) => {
         "description": "Test Description",
         "tokenId" : parseInt(query),
         "image": `https://gateway.pinata.cloud/ipfs/${trait["imageIPFS"]}`,
-        "external_url":"https://www.testNFT.co",
+        "external_url":"https://test-nft-iota.vercel.app/",
         "attributes": [          
             {
               "trait_type": "Background",
