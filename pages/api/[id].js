@@ -32,11 +32,11 @@ const query = req.query.id;
 
 
     // CALL CUSTOM TOKEN NAME IN THE CONTRACT
-    //const tokenNameCall = await nftContract.methods.nftNames(query).call();
-    //let tokenName = `#${query}${(tokenNameCall === '') ? "" : ` - ${tokenNameCall}`}`
+    const tokenNameCall = await nftContract.methods.nftNames(query).call();
+    let tokenName = `#${query}${(tokenNameCall === '') ? "" : ` - ${tokenNameCall}`}`
 
     // IF YOU ARE NOT USING CUSTOM NAMES, JUST USE THIS
-    let tokenName= `#${query}`
+    //let tokenName= `#${query}`
 
     
     
