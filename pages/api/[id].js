@@ -11,12 +11,12 @@ const projectApi = async(req, res) => {
     // SOME WEB3 STUFF TO CONNECT TO SMART CONTRACT
     const provider = new Web3.providers.HttpProvider(infuraAddress)
     const web3infura = new Web3(provider);
-    const nftProject = new web3infura.eth.Contract(ABI, ADDRESS)
-    
+    const nftContract = new web3infura.eth.Contract(ABI, ADDRESS)
+
 
 
   // IF YOU ARE USING INSTA REVEAL MODEL, USE THIS TO GET HOW MANY NFTS ARE MINTED
-  const totalSupply = await nftProject.methods.totalSupply().call();
+  const totalSupply = await nftContract.methods.totalSupply().call();
   console.log(totalSupply)
   
 
@@ -32,11 +32,11 @@ const query = req.query.id;
 
 
     // CALL CUSTOM TOKEN NAME IN THE CONTRACT
-    const tokenNameCall = await nftProject.methods.nftNames(query).call();
-    let tokenName = `#${query}${(tokenNameCall === '') ? "" : ` - ${tokenNameCall}`}`
+    //const tokenNameCall = await nftContract.methods.nftNames(query).call();
+    //let tokenName = `#${query}${(tokenNameCall === '') ? "" : ` - ${tokenNameCall}`}`
 
     // IF YOU ARE NOT USING CUSTOM NAMES, JUST USE THIS
-    // let tokenName= `#${query}`
+    let tokenName= `#${query}`
 
     
     
@@ -48,7 +48,7 @@ const query = req.query.id;
     let metadata = {}
     // IF THE REQUESTED TOKEN IS A SIGNATURE, RETURN THIS METADATA
     if ( signatures.includes( parseInt( query ) ) ) {
-      
+
       metadata = {
         "name": tokenName,
         "description": " Test Description",
@@ -74,28 +74,28 @@ const query = req.query.id;
       "attributes": [          
       {
         "trait_type": "Background",
-        "value": trait["backgrounds"]
+        "value": trait["Background"]
       },
       {
         "trait_type": "Face",
-        "value": trait["faces"]
+        "value": trait["Face"]
       },
       {
         "trait_type": "Mouth",
-        "value": trait["mouths"]
+        "value": trait["Mouth"]
       },
       {
         "trait_type": "Eyes",
-        "value": trait["eyes"]
+        "value": trait["Eyes"]
       },
             // {
             //   "trait_type": "Head Gear",
             //   "value": trait["headgear"]
             // },
-            
+
             ]
           }
-          
+
       // console.log(metadata)
 
     }
