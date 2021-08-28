@@ -4,7 +4,7 @@ import Web3 from "web3";
 // import the json containing all metadata. not recommended, try to fetch the database from a middleware if possible, I use MONGODB for example
 //import traits from "../../database/finaltraits.json";
 
-export const getStaticProps = () => {
+export const getStaticProps = async() => {
 
   const res = await fetch('https://gateway.pinata.cloud/ipfs/QmYQU1uVdEioAe25J2298rkepASXV32VBtip9i15bNNYho');
   const data = await res.json();
@@ -52,7 +52,7 @@ const query = req.query.id;
     
     //const signatures = [137,883,1327,1781,2528,2763,3833,5568,5858,6585,6812,7154,8412]
     const trait = traits[parseInt(query)]
-    const trait = traits[ Math.floor(Math.random() * 8888) ] // for testing on rinkeby 
+    //const trait = traits[ Math.floor(Math.random() * 8888) ] // for testing on rinkeby 
 
     // CHECK OPENSEA METADATA STANDARD DOCUMENTATION https://docs.opensea.io/docs/metadata-standards
     let metadata = {
