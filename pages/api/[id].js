@@ -2,7 +2,7 @@ import {INFURA_ADDRESS, ADDRESS, ABI} from "../../config.js"
 import Web3 from "web3";
 
 // import the json containing all metadata. not recommended, try to fetch the database from a middleware if possible, I use MONGODB for example
-import traits from "https://gateway.pinata.cloud/ipfs/QmYQU1uVdEioAe25J2298rkepASXV32VBtip9i15bNNYho";
+import traits from "../../database/finaltraits.json";
 
 const infuraAddress = INFURA_ADDRESS
 
@@ -32,40 +32,20 @@ const query = req.query.id;
 
 
     // CALL CUSTOM TOKEN NAME IN THE CONTRACT
-    const tokenNameCall = await nftContract.methods.nftNames(query).call();
-    let tokenName = `#${query}${(tokenNameCall === '') ? "" : ` - ${tokenNameCall}`}`
+    // const tokenNameCall = await nftContract.methods.nftNames(query).call();
+    // let tokenName = `#${query}${(tokenNameCall === '') ? "" : ` - ${tokenNameCall}`}`
 
     // IF YOU ARE NOT USING CUSTOM NAMES, JUST USE THIS
-    //let tokenName= `#${query}`
+    let tokenName= `#${query}`
 
     
     
-    const signatures = [137,883,1327,1781,2528,2763,3833,5568,5858,6585,6812,7154,8412]
+    //const signatures = [137,883,1327,1781,2528,2763,3833,5568,5858,6585,6812,7154,8412]
     const trait = traits[parseInt(query)]
-    // const trait = traits[ Math.floor(Math.random() * 8888) ] // for testing on rinkeby 
+    const trait = traits[ Math.floor(Math.random() * 8888) ] // for testing on rinkeby 
 
     // CHECK OPENSEA METADATA STANDARD DOCUMENTATION https://docs.opensea.io/docs/metadata-standards
-    let metadata = {}
-    // IF THE REQUESTED TOKEN IS A SIGNATURE, RETURN THIS METADATA
-    if ( signatures.includes( parseInt( query ) ) ) {
-
-      metadata = {
-        "name": tokenName,
-        "description": " Test Description",
-        "tokenId" : parseInt(query),
-        "image": `https://gateway.pinata.cloud/ipfs/${trait["imageIPFS"]}`,
-        "external_url":"https://test-nft-iota.vercel.app/",
-        "attributes": [   
-        {
-          "trait_type": "Signature Series",
-          "value": trait["Signature Series"]
-        }    
-        ]
-      }
-      // console.log(metadata)
-    } else {
-    // GENERAL NFT METADATA
-    metadata = {
+    let metadata = {
       "name": tokenName,
       "description": "Test Description",
       "tokenId" : parseInt(query),
@@ -96,17 +76,13 @@ const query = req.query.id;
             ]
           }
 
-      // console.log(metadata)
+          res.statusCode = 200
+          res.json(metadata)
+        } else {
+          res.statuscode = 404
+          res.json({error: "The NFT you requested is out of range"})
 
-    }
-    
-    res.statusCode = 200
-    res.json(metadata)
-  } else {
-    res.statuscode = 404
-    res.json({error: "The NFT you requested is out of range"})
-
-  }
+        }
 
 
   // this is after the reveal
