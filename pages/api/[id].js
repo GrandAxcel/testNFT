@@ -2,7 +2,17 @@ import {INFURA_ADDRESS, ADDRESS, ABI} from "../../config.js"
 import Web3 from "web3";
 
 // import the json containing all metadata. not recommended, try to fetch the database from a middleware if possible, I use MONGODB for example
-import traits from "../../database/finaltraits.json";
+//import traits from "../../database/finaltraits.json";
+
+export const getStaticProps = () => {
+
+  const res = await fetch('https://gateway.pinata.cloud/ipfs/QmYQU1uVdEioAe25J2298rkepASXV32VBtip9i15bNNYho');
+  const data = await res.json();
+
+  return{
+    props: {traits: data}
+  }
+}
 
 const infuraAddress = INFURA_ADDRESS
 
