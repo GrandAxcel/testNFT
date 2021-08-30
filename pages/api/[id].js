@@ -1,8 +1,9 @@
 import {INFURA_ADDRESS, ADDRESS, ABI} from "../../config.js"
 import Web3 from "web3";
 
+const fetch = require('node-fetch');
 // import the json containing all metadata. not recommended, try to fetch the database from a middleware if possible, I use MONGODB for example
-import traits from "https://gateway.pinata.cloud/ipfs/QmYQU1uVdEioAe25J2298rkepASXV32VBtip9i15bNNYho";
+//import traits from "../../database/finaltraits.json";
 
 const infuraAddress = INFURA_ADDRESS
 
@@ -13,7 +14,18 @@ const projectApi = async(req, res) => {
     const web3infura = new Web3(provider);
     const nftContract = new web3infura.eth.Contract(ABI, ADDRESS)
 
+    let traits;
 
+    try {
+      const apiResponse = await fetch(
+        'https://gateway.pinata.cloud/ipfs/QmYQU1uVdEioAe25J2298rkepASXV32VBtip9i15bNNYho',
+        );
+      traits = await apiResponse.json();
+      console.log(traits);
+    } catch (err) {
+      console.log(err);
+      res.json({ error: 'Something went wrong' });
+    }
 
   // IF YOU ARE USING INSTA REVEAL MODEL, USE THIS TO GET HOW MANY NFTS ARE MINTED
   const totalSupply = await nftContract.methods.totalSupply().call();
